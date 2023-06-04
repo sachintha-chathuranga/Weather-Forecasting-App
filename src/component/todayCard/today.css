@@ -9,7 +9,6 @@
     text-align: center;
 }
 .search-bar{
-    width: 100%;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -21,8 +20,8 @@
     color: #555;
     padding: 10px 25px;
     height: 60px;
+    flex: 2;
     border-radius: 5px;
-    flex: 1;
     margin-right: 16px;
     font-size: 18px;
 }
@@ -143,7 +142,6 @@
     }
     .search-bar input {
         padding: 8px 13px;
-        border-radius: 30px;
         margin-right: 11px;
         font-size: 15px;
     }
