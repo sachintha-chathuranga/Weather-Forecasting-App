@@ -4,6 +4,11 @@ import axios from "axios";
 import './today.css';
 import { useRef } from 'react';
 
+
+
+const API_URL = process.env.REACT_APP_API_URL;
+const API_KEY = process.env.REACT_APP_API_KEY;
+
 export default function TodayWeather({setForeCast}) {
     
     const [data, setData] = useState({
@@ -20,9 +25,9 @@ export default function TodayWeather({setForeCast}) {
     
 
     useEffect(() => {
-        axios.get("https://api.openweathermap.org/data/2.5/weather?q=colombo&appid=8a054cdd09032e964a87f9a0d49b1665&units=metric")
+        axios.get(`${API_URL}data/2.5/weather?q=colombo&appid=${API_KEY}&units=metric`)
         .then(res =>{
-            setDate(new Date(res.data.dt));
+            setDate(Date(res.data.dt));
             setData({...data, main: res.data.weather[0].main, temp: res.data.main.temp, 
             precipitation: res.data.main.feels_like, humidity: res.data.main.humidity, wind: res.data.wind.speed, city: res.data.name});
         })
@@ -31,9 +36,9 @@ export default function TodayWeather({setForeCast}) {
 
     const handleSearch = () =>{
         if(cityName.current.value !== ""){
-            axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${cityName.current.value}&appid=8a054cdd09032e964a87f9a0d49b1665&units=metric`)
+            axios.get(`${API_URL}data/2.5/weather?q=${cityName.current.value}&appid=${API_KEY}&units=metric`)
             .then(res =>{
-                setDate(new Date(res.data.dt));
+                setDate(Date(res.data.dt));
                 setData({...data, main: res.data.weather[0].main, temp: res.data.main.temp, 
                 precipitation: res.data.main.feels_like, humidity: res.data.main.humidity, wind: res.data.wind.speed, city: res.data.name});
         })
@@ -45,7 +50,7 @@ export default function TodayWeather({setForeCast}) {
             }
         });
 
-            axios.get(`https://api.openweathermap.org/data/2.5/forecast/daily?q=${cityName.current.value}&cnt=3&appid=8a054cdd09032e964a87f9a0d49b1665&units=metric`)
+            axios.get(`${API_URL}data/2.5/forecast/daily?q=${cityName.current.value}&cnt=3&appid=${API_KEY}&units=metric`)
             .then(res =>{
                 setForeCast(res.data.list);
             })
@@ -66,27 +71,27 @@ export default function TodayWeather({setForeCast}) {
                 <div className="weather-info">
                     <div className="weather-descript">{data.main}</div>
                     <img className="weather-icon" src={`./img/${data.main}.png`}alt="img"/>
-                    <h1 className="main-temp">{data.temp}°C</h1>
+                    <h1 className="main-temp">{Math.round(data.temp)}°C</h1>
                     <div className="date-time">{date}</div>
                     <div className="sub-info">
                         <div className="col">
                             <img src="./img/rain-umbrella.png" alt="img"/>
                             <div>
-                                <p className="precipitation">{data.precipitation}%</p>
+                                <p className="precipitation">{Math.round(data.precipitation)}%</p>
                                 <p>precipitation</p>
                             </div>
                         </div>
                         <div className="col">
                             <img src="./img/drop.png" alt="img"/>
                             <div>
-                                <p className="humidity">{data.humidity}%</p>
+                                <p className="humidity">{Math.round(data.humidity)}%</p>
                                 <p>Humidity</p>
                             </div>
                         </div>
                         <div className="col">
                             <img src="./img/wind.png" alt="img"/>
                             <div>
-                                <p className="wind">{data.wind} km/h</p>
+                                <p className="wind">{Math.round(data.wind)} km/h</p>
                                 <p>Wind Speed</p>
                             </div>
                         </div>

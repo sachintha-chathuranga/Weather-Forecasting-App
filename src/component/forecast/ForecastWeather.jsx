@@ -5,12 +5,15 @@ import Card from '../card/Card';
 import axios from "axios";
 import "./forecast.css";
 
+const API_URL = process.env.REACT_APP_API_URL;
+const API_KEY = process.env.REACT_APP_API_KEY;
+
 export default function ForecastWeather({list}) {
     const [days, setDays] = useState(3);
     const [foreCast, setForeCast] = useState(list);
 
     useEffect(() => {
-        axios.get(`https://api.openweathermap.org/data/2.5/forecast/daily?q=colombo&cnt=${days}&appid=8a054cdd09032e964a87f9a0d49b1665&units=metric`)
+        axios.get(`${API_URL}data/2.5/forecast/daily?q=colombo&cnt=${days}&appid=${API_KEY}&units=metric`)
         .then(res =>{
             setForeCast(res.data.list);
         })

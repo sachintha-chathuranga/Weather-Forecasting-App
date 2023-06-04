@@ -16,7 +16,6 @@ function App() {
         </Route>
         <Route path="/login">
           {user ? <Redirect to="/" /> : <Login setUser={getUser} />}
-          <Login />
         </Route>
       </Switch>
     </Router>
