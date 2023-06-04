@@ -141,7 +141,8 @@
         border-radius: 0;
     }
     .search-bar{
-        justify-content: space-evenly;
+        width: 90%;
+        justify-content: center;
     }
     .search-bar input {
         padding: 8px 13px;
