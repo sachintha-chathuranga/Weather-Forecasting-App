@@ -1,4 +1,3 @@
-import { useScrollTrigger } from "@material-ui/core";
 import Home from "./pages/home/Home";
 import Login from "./pages/login/Login";
 import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom";

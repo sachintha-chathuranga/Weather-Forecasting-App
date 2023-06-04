@@ -1,8 +1,7 @@
-import { InfoOutlined } from '@material-ui/icons';
 import React from 'react';
 import { useRef, useState } from 'react';
 import './login.css';
-import {useHistory} from "react-router";
+import {useHistory} from "react-router-dom";
 
 export default function Login({setUser}) {
     const userName = useRef("");

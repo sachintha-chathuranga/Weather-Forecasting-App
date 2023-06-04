@@ -31,10 +31,8 @@ export default function TodayWeather({setForeCast}) {
 
     const handleSearch = () =>{
         if(cityName.current.value !== ""){
-
             axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${cityName.current.value}&appid=8a054cdd09032e964a87f9a0d49b1665&units=metric`)
             .then(res =>{
-                console.log(res.data);
                 setData({...data, main: res.data.weather[0].main, desc: res.data.weather[0].descriptions, temp: res.data.main.temp, 
                 precipitation: res.data.main.feels_like, humidity: res.data.main.humidity, wind: res.data.wind.speed, city: res.data.name});
         })
