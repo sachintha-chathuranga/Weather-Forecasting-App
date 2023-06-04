@@ -8,3 +8,13 @@
     font-family: 'Poppins', sans-serif;
 }
 
+body{
+    background: #222;
+}
+
+@media only screen and (max-width: 460px){
+    body{
+        background: linear-gradient(135deg, #00feba, #5b548a);
+    }
+}
+
