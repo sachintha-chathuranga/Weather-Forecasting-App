@@ -12,7 +12,7 @@ export default function Login({setUser}) {
     const handleSubmit = (e) =>{
         
         e.preventDefault();
-        if(userName.current.value === "admin" && password.current.value === "admin$6&"){
+        if(userName.current.value === "admin" && password.current.value === "admin123"){
             setUser({userName: userName, password: password});
             history.push("/");
         }else{

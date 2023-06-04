@@ -8,10 +8,12 @@ import './home.css';
 export default function Home() {
     
     const [data, setData] = useState([]);
-
+    const setDataList = (d) =>{
+        setData(d);
+    }
     return (
         <div className="home">
-            <TodayWeather setForeCast={setData}/>
+            <TodayWeather setForeCast={setDataList}/>
             <ForecastWeather list={data} />
         </div>
     )

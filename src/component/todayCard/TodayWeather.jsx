@@ -7,15 +7,14 @@ import { useRef } from 'react';
 export default function TodayWeather({setForeCast}) {
     
     const [data, setData] = useState({
-        main: "sun",
-        desc: "sunny day",
+        main: "cloudy",
         temp: 30,
         precipitation: 10,
         humidity: 5,
         wind: 40,
         city: "Colombo"
     });
-
+    const [date, setDate] = useState("sunday");
     const cityName = useRef("");
     const [error, setError] = useState("");
     
@@ -23,7 +22,8 @@ export default function TodayWeather({setForeCast}) {
     useEffect(() => {
         axios.get("https://api.openweathermap.org/data/2.5/weather?q=colombo&appid=8a054cdd09032e964a87f9a0d49b1665&units=metric")
         .then(res =>{
-            setData({...data, main: res.data.weather[0].main, desc: res.data.weather[0].descriptions, temp: res.data.main.temp, 
+            setDate(new Date(res.data.dt));
+            setData({...data, main: res.data.weather[0].main, temp: res.data.main.temp, 
             precipitation: res.data.main.feels_like, humidity: res.data.main.humidity, wind: res.data.wind.speed, city: res.data.name});
         })
         .catch(err => console.log(err));
@@ -33,7 +33,8 @@ export default function TodayWeather({setForeCast}) {
         if(cityName.current.value !== ""){
             axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${cityName.current.value}&appid=8a054cdd09032e964a87f9a0d49b1665&units=metric`)
             .then(res =>{
-                setData({...data, main: res.data.weather[0].main, desc: res.data.weather[0].descriptions, temp: res.data.main.temp, 
+                setDate(new Date(res.data.dt));
+                setData({...data, main: res.data.weather[0].main, temp: res.data.main.temp, 
                 precipitation: res.data.main.feels_like, humidity: res.data.main.humidity, wind: res.data.wind.speed, city: res.data.name});
         })
         .catch(err => {
@@ -63,10 +64,10 @@ export default function TodayWeather({setForeCast}) {
             <section className="main-weather" >
                 <h2 className="city">{data.city}</h2>
                 <div className="weather-info">
-                    <div className="weather-descript">{data.desc}</div>
+                    <div className="weather-descript">{data.main}</div>
                     <img className="weather-icon" src={`./img/${data.main}.png`}alt="img"/>
                     <h1 className="main-temp">{data.temp}°C</h1>
-                    <div className="date-time">sunday</div>
+                    <div className="date-time">{date}</div>
                     <div className="sub-info">
                         <div className="col">
                             <img src="./img/rain-umbrella.png" alt="img"/>
