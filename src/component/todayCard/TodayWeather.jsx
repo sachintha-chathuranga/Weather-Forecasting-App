@@ -35,7 +35,7 @@ export default function TodayWeather() {
     }, [data]);
 
     const handleSearch = () =>{
-        if(cityName.current.value !== ""){
+        if(cityName.current.value != ""){
             axios.get(`${API_URL}data/2.5/weather?q=${cityName.current.value}&appid=${API_KEY}&units=metric`)
             .then(res =>{
                 setDate(Date(res.data.dt));
@@ -43,7 +43,7 @@ export default function TodayWeather() {
                 precipitation: res.data.main.feels_like, humidity: res.data.main.humidity, wind: res.data.wind.speed, city: res.data.name});
         })
         .catch(err => {
-            if(err.response.status === 404 ){
+            if(err.response.status == 404 ){
                 setError("Invalid City Name");
             }else{
                 setError(err.response);

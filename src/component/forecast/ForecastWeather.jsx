@@ -27,7 +27,7 @@ export default function ForecastWeather({list}) {
             {foreCast.map((d) =>(
                 <Card id={d.weather[0].id} data={d} />
             ))}
-            {days!==7 && <button onClick={() => setDays(7)} className="veiw-more">Veiw More</button>}
+            {days!=7 && <button onClick={() => setDays(7)} className="veiw-more">Veiw More</button>}
             </div>
         </div>
     )
