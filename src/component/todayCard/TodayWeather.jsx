@@ -9,7 +9,7 @@ import { useRef } from 'react';
 const API_URL = process.env.REACT_APP_API_URL;
 const API_KEY = process.env.REACT_APP_API_KEY;
 
-export default function TodayWeather({setForeCast}) {
+export default function TodayWeather() {
     
     const [data, setData] = useState({
         main: "clouds",
@@ -32,7 +32,7 @@ export default function TodayWeather({setForeCast}) {
             precipitation: res.data.main.feels_like, humidity: res.data.main.humidity, wind: res.data.wind.speed, city: res.data.name});
         })
         .catch(err => console.log(err));
-    }, []);
+    }, [data]);
 
     const handleSearch = () =>{
         if(cityName.current.value !== ""){
@@ -50,11 +50,11 @@ export default function TodayWeather({setForeCast}) {
             }
         });
 
-            axios.get(`${API_URL}data/2.5/forecast/daily?q=${cityName.current.value}&cnt=3&appid=${API_KEY}&units=metric`)
-            .then(res =>{
-                setForeCast(res.data.list);
-            })
-            .catch(err => console.log(err));
+            // axios.get(`${API_URL}data/2.5/forecast/daily?q=${cityName.current.value}&cnt=3&appid=${API_KEY}&units=metric`)
+            // .then(res =>{
+            //     setForeCast(res.data.list);
+            // })
+            // .catch(err => console.log(err));
         }
     }
 

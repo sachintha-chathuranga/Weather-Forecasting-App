@@ -7,13 +7,13 @@ import './home.css';
 
 export default function Home() {
     
-    const [data, setData] = useState([]);
-    const setDataList = (d) =>{
-        setData(d);
-    }
+    // const [data, setData] = useState([]);
+    // const setDataList = (d) =>{
+    //     setData(d);
+    // }
     return (
         <div className="home">
-            <TodayWeather setForeCast={setDataList}/>
+            <TodayWeather />
             {/* <ForecastWeather list={data} /> */}
         </div>
     )
