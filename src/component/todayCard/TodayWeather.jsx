@@ -12,7 +12,7 @@ const API_KEY = process.env.REACT_APP_API_KEY;
 export default function TodayWeather({setForeCast}) {
     
     const [data, setData] = useState({
-        main: "cloudy",
+        main: "clouds",
         temp: 30,
         precipitation: 10,
         humidity: 5,
