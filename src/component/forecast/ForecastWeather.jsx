@@ -1,34 +1,25 @@
 import React from 'react';
-import { useEffect } from 'react';
-import { useState } from 'react';
+import { memo } from 'react';
 import Card from '../card/Card';
-import axios from "axios";
 import "./forecast.css";
 
-const API_URL = process.env.REACT_APP_API_URL;
-const API_KEY = process.env.REACT_APP_API_KEY;
+const array = [1,2,3,4,5,6,7];
 
-export default function ForecastWeather({list}) {
-    const [days, setDays] = useState(3);
-    const [foreCast, setForeCast] = useState(list);
+function ForecastWeather({list, isfetching}) {
 
-    useEffect(() => {
-        axios.get(`${API_URL}data/2.5/forecast/daily?q=colombo&cnt=${days}&appid=${API_KEY}&units=metric`)
-        .then(res =>{
-            setForeCast(res.data.list);
-        })
-        .catch(err => console.log(err));
-    }, [days]);
     return (
         <div className="forecast">
             <h4>Forecast</h4>
             <hr/>
             <div className="row">
-            {foreCast.map((d) =>(
-                <Card id={d.weather[0].id} data={d} />
+            {(!isfetching && list) ? list.time.map((day, index) =>(
+                <Card key={day} data={{day : day, mood : list.weathercode[index], temp : list.temperature_2m_max[index]}} isFetching={isfetching} />
+            )) : array.map(index => (
+                <Card key={index} isFetching={isfetching}/>
             ))}
-            {days!=7 && <button onClick={() => setDays(7)} className="veiw-more">Veiw More</button>}
             </div>
         </div>
     )
 }
+
+export default memo(ForecastWeather);

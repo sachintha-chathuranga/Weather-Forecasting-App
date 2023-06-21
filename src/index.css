@@ -8,12 +8,11 @@
     font-family: 'Poppins', sans-serif;
 }
 :root{
-    --theme-color: linear-gradient(135deg, #161818, #227fa7);;
+    --theme-color: linear-gradient(135deg, #161818, #227fa7);
 }
 
 body{
     background: #222;
-    height: 100vh;
 }
 
 @media only screen and (max-height: 645px){

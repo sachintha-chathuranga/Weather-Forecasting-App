@@ -1,104 +1,87 @@
 import React from 'react';
-import { useState, useEffect } from 'react';
-import axios from "axios";
+import { useState, useEffect, useMemo } from 'react';
 import './today.css';
+import Skelton from '../skelton/Skelton';
+import SubCard from '../subInfo/SubCard';
+import { memo } from 'react';
+import useFetch from '../../useFetch';
 import { useRef } from 'react';
 
-
-
 const API_URL = process.env.REACT_APP_API_URL;
+const FORECAST_API_URL = process.env.REACT_APP_FORECAST_API_URL;
 const API_KEY = process.env.REACT_APP_API_KEY;
 
-export default function TodayWeather() {
-    
-    const [data, setData] = useState({
-        main: "clouds",
-        temp: 30,
-        precipitation: 10,
-        humidity: 5,
-        wind: 40,
-        city: "Colombo"
-    });
-    const [date, setDate] = useState("sunday");
-    const cityName = useRef("");
-    const [error, setError] = useState("");
-    
+function TodayWeather({setForeCast, setisFetching}) {
 
-    useEffect(() => {
-        axios.get(`${API_URL}data/2.5/weather?q=colombo&appid=${API_KEY}&units=metric`)
-        .then(res =>{
-            setDate(Date(res.data.dt));
-            setData({...data, main: res.data.weather[0].main, temp: res.data.main.temp, 
-            precipitation: res.data.main.feels_like, humidity: res.data.main.humidity, wind: res.data.wind.speed, city: res.data.name});
-        })
-        .catch(err => console.log(err));
-    }, [data]);
+    const input = useRef(null);
+    const [cityName, setCityName] = useState("colombo");
+    const {data, error, isFetching, setError} = useFetch(`${API_URL}data/2.5/weather?q=${cityName}&appid=${API_KEY}&units=metric`);
+    data && console.log(data.lat);
+    // const [data, setData] = useState({});
+    // const [date, setDate] = useState(null);
+    // const [error, setError] = useState("");
+    // const [isFetchingCurr, setIsfetchingCurr] = useState(false);
+    
+    // useEffect(() => {
+    //     // setIsfetchingCurr(true);/
+    //     // when first time page render fetch current weather details from backend
+    //     // axios.get(`${API_URL}data/2.5/weather?q=colombo&appid=${API_KEY}&units=metric`)
+    //     // .then(res =>{
+    //     //     setDate(Date(res.data.dt));
+    //     //     setData({...data, main: res.data.weather[0].main, temp: res.data.main.temp, 
+    //     //         precipitation: res.data.main.feels_like, humidity: res.data.main.humidity, wind: res.data.wind.speed, city: res.data.name});
+    //     //     setIsfetchingCurr(false);
+    //     //     })
+    //     //     .catch(err => {
+    //     //         setError(err.response);
+    //     //         setIsfetchingCurr(false);
+    //     //     });
 
+    //     // setisFetching(true);
+    //     // // when first time page render fetch forecast weather details from backend
+    //     // axios.get(`${FORECAST_API_URL}latitude=6.94&longitude=79.85`)
+    //     // .then(res =>{
+    //     //     setForeCast(res.data.daily);
+    //     //     setisFetching(false);
+    //     // })
+    //     // .catch(err => setError(err.response));
+    // }, [data, setForeCast, setisFetching]);
+    
     const handleSearch = () =>{
-        if(cityName.current.value != ""){
-            axios.get(`${API_URL}data/2.5/weather?q=${cityName.current.value}&appid=${API_KEY}&units=metric`)
-            .then(res =>{
-                setDate(Date(res.data.dt));
-                setData({...data, main: res.data.weather[0].main, temp: res.data.main.temp, 
-                precipitation: res.data.main.feels_like, humidity: res.data.main.humidity, wind: res.data.wind.speed, city: res.data.name});
-        })
-        .catch(err => {
-            if(err.response.status == 404 ){
-                setError("Invalid City Name");
-            }else{
-                setError(err.response);
-            }
-        });
+        if(input.current.value){
+            setCityName(input.current.value);
 
-            // axios.get(`${API_URL}data/2.5/forecast/daily?q=${cityName.current.value}&cnt=3&appid=${API_KEY}&units=metric`)
+            // setisFetching(true);
+            // fetch forecasting data for the search city
+            // axios.get(`${FORECAST_API_URL}latitude=6.94&longitude=79.85`)
             // .then(res =>{
-            //     setForeCast(res.data.list);
+            //     setForeCast(res.data.daily);
+            //     setisFetching(false);
             // })
-            // .catch(err => console.log(err));
+            // .catch(err => setError(err.response));
         }
     }
 
     return (
-
+        
         <div className="today-card">
             <div className="search-bar">
-                <input type="text" placeholder="Enter City Name" onChange={() => setError("")} ref={cityName}/>
+                <input type="text" placeholder="Enter City Name" onChange={() => setError(null)} ref={input} />
                 <button onClick={handleSearch}><img src="./img/search.png" alt=""/> </button>
             </div>
             {error && <div className="error-txt">{error}</div>}
             <section className="main-weather" >
-                <h2 className="city">{data.city}</h2>
+                <h2 className="city">{isFetching||!data ? <Skelton type="city"/> : data.city}</h2>
                 <div className="weather-info">
-                    <div className="weather-descript">{data.main}</div>
-                    <img className="weather-icon" src={`./img/${data.main}.png`}alt="img"/>
-                    <h1 className="main-temp">{Math.round(data.temp)}°C</h1>
-                    <div className="date-time">{date}</div>
-                    <div className="sub-info">
-                        <div className="col">
-                            <img src="./img/rain-umbrella.png" alt="img"/>
-                            <div>
-                                <p className="precipitation">{Math.round(data.precipitation)}%</p>
-                                <p>precipitation</p>
-                            </div>
-                        </div>
-                        <div className="col">
-                            <img src="./img/drop.png" alt="img"/>
-                            <div>
-                                <p className="humidity">{Math.round(data.humidity)}%</p>
-                                <p>Humidity</p>
-                            </div>
-                        </div>
-                        <div className="col">
-                            <img src="./img/wind.png" alt="img"/>
-                            <div>
-                                <p className="wind">{Math.round(data.wind)} km/h</p>
-                                <p>Wind Speed</p>
-                            </div>
-                        </div>
-                        
-                    </div>
+                    <div className="weather-descript">{isFetching||!data ? <Skelton type="mood"/> : data.main}</div>
+                   {isFetching||!data ? <Skelton type="image"/> : <img className="weather-icon" src={`./img/${data.main}.png`}alt="img"/>}
+                    <h1 className="main-temp">{isFetching||!data ? <Skelton type="temp"/> : Math.round(data.temp)+"°C"}</h1>
+                    <div className="date-time">{isFetching||!data ? <Skelton type="date"/> : data.date}</div>
+                    <SubCard data={data} isFetching={isFetching} />
                 </div>
             </section>
         </div>
     )
 }
+
+export default memo(TodayWeather);

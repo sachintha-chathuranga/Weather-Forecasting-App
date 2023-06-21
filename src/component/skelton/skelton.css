@@ -1,0 +1,74 @@
+.skelton{
+    background-color: #8ccbe180;
+    display: inline-block;
+    border-radius: 30px;
+    overflow: hidden;
+}
+.shimer{
+    width: 100%;
+    height: 100%;
+    /* background: #093940;
+    box-shadow: 0 0 30px 30px #093940; */
+    animation: loading 1.4s infinite;
+    animation-timing-function: linear;
+    animation-direction: alternate;
+}
+
+@keyframes loading {
+    0%{
+        background-color: #0939402d;
+        /* transform: translate(-150%); */
+    }
+    100%{
+        /* transform: translate(250%); */
+        background-color: #09394086;
+    }
+}
+
+.skelton.city{
+    width: 300px;
+    height: 34px;
+}
+.skelton.mood{
+    height: 20px;
+    width: 150px;
+}
+.skelton.image{
+    height: 170px;
+    width: 170px;
+    margin-top: 20px;
+}
+.skelton.temp{
+    height: 60px;
+    width: 215px;
+}
+.skelton.date{
+    height: 13px;
+    width: 400px;
+}
+.skelton.day{
+    height: 15px;
+    width: 53px;
+    margin-bottom: 8px;
+}
+.skelton.fore-img{
+    height: 52px;
+    width: 52px;
+    border-radius: 10px;
+    margin-bottom: 8px;
+}
+.skelton.fore-temp{
+    height: 15px;
+    width: 30px;
+}
+@media only screen and (max-width: 500px){
+    .skelton.city{
+        width: 190px;
+    }
+    .skelton.mood{
+        width: 120px;
+    }
+    .skelton.date{
+        width: 250px;
+    }
+}
