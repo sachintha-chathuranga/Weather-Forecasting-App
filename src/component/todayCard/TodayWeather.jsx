@@ -11,12 +11,18 @@ const API_KEY = process.env.REACT_APP_API_KEY;
 function TodayWeather({setCoord}) {
 
     const [latitude, longitude]= useLocation();
-    const [url, setUrl] = useState(`${API_URL}data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${API_KEY}&units=metric`);
+    const [url, setUrl] = useState(null);
     const input = useRef(null);
     const {data, error, isFetching, setError} = useFetch(url, false);
-    
+
     useEffect(() => {
-        data ? setCoord({lon: data.lon, lat: data.lat}) : setCoord({});
+        if(latitude!==null && longitude!==null){
+            setUrl(`${API_URL}data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${API_KEY}&units=metric`);
+        }
+    }, [latitude, longitude]);
+
+    useEffect(() => {
+        data && setCoord({lon: data.lon, lat: data.lat});
     }, [data, setCoord]);
 
     const handleSearch = () =>{

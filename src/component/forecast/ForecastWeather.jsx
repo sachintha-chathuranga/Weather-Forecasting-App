@@ -1,4 +1,4 @@
-import { memo } from 'react';
+import { memo, useState, useEffect } from 'react';
 import useFetch from '../../useFetch';
 import Card from '../card/Card';
 import "./forecast.css";
@@ -7,8 +7,12 @@ const array = [1,2,3,4,5,6,7];
 const FORECAST_API_URL = process.env.REACT_APP_FORECAST_API_URL;
 
 function ForecastWeather({coord}) {
+    const [url, setUrl] = useState(null);
+    const {data, error, isFetching} = useFetch(url, true);
     
-    const {data, error, isFetching} = useFetch(`${FORECAST_API_URL}latitude=${coord.lat}&longitude=${coord.lon}`, true);
+    useEffect(() => {
+        coord.lat && setUrl(`${FORECAST_API_URL}latitude=${coord.lat}&longitude=${coord.lon}`);
+    }, [coord]);
     
     return (
         <div className="forecast">

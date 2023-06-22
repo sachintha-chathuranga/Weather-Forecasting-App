@@ -23,7 +23,7 @@ const useFetch = (url, isForecast) => {
             }
             setIsfetching(false);
         }
-        fetchData();
+        url!==null && fetchData();
     }, [url, isForecast]);
 
     return ({data, error, isFetching, setError});
