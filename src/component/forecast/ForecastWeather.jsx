@@ -12,7 +12,7 @@ function ForecastWeather({coord}) {
     
     return (
         <div className="forecast">
-            <h4>Forecast</h4>
+            <h4>This week forecasting</h4>
             <hr/>
             {error && <div className="error-txt">{error}</div>}
             <div className="row">

@@ -3,15 +3,17 @@ import './today.css';
 import Skelton from '../skelton/Skelton';
 import SubCard from '../subInfo/SubCard';
 import useFetch from '../../useFetch';
+import useLocation from '../../useLocation';
 
 const API_URL = process.env.REACT_APP_API_URL;
 const API_KEY = process.env.REACT_APP_API_KEY;
 
 function TodayWeather({setCoord}) {
 
+    const [latitude, longitude]= useLocation();
+    const [url, setUrl] = useState(`${API_URL}data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${API_KEY}&units=metric`);
     const input = useRef(null);
-    const [cityName, setCityName] = useState("colombo");
-    const {data, error, isFetching, setError} = useFetch(`${API_URL}data/2.5/weather?q=${cityName}&appid=${API_KEY}&units=metric`, false);
+    const {data, error, isFetching, setError} = useFetch(url, false);
     
     useEffect(() => {
         data ? setCoord({lon: data.lon, lat: data.lat}) : setCoord({});
@@ -19,7 +21,7 @@ function TodayWeather({setCoord}) {
 
     const handleSearch = () =>{
         if(input.current.value){
-            setCityName(input.current.value);
+            setUrl(`${API_URL}data/2.5/weather?q=${input.current.value.trim()}&appid=${API_KEY}&units=metric`);
         }
     }
 
@@ -27,7 +29,7 @@ function TodayWeather({setCoord}) {
         
         <div className="today-card">
             <div className="search-bar">
-                <input type="text" placeholder="Enter City Name" onChange={() => setError(null)} ref={input} />
+                <input minLength="2" maxLength="20" pattern="[A-Za-z]+" title="Please enter only alphabetic characters!" type="text" placeholder="Enter City Name" onChange={() => setError(null)} ref={input} />
                 <button onClick={handleSearch}><img src="./img/search.png" alt=""/></button>
             </div>
             {error && <div className="error-txt">{error}</div>}
