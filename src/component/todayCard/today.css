@@ -1,9 +1,9 @@
 .today-card{
-    width: 90%;
+    width: 100%;
     max-width: 800px;
     background: linear-gradient(135deg, #161818, #227fa7);
     color: #fff;
-    margin: 45px auto 0;
+    margin: 45px 22px 45px 45px;
     border-radius: 5px;
     padding: 40px 35px;
     text-align: center;
@@ -19,7 +19,7 @@
     background: #03272c54;
     color: rgb(217 249 255);
     padding: 10px 25px;
-    height: 60px;
+    height: 40px;
     flex: 1;
     border-radius: 5px;
     margin-right: 16px;
@@ -40,22 +40,22 @@ input::placeholder{
     outline: 0;
     background: #03272c54;
     border-radius: 50%;
-    width: 60px;
-    height: 60px;
+    width: 40px;
+    height: 40px;
     cursor: pointer;
 }
 .search-bar input:focus ~ button{
     border: 1px solid #35d4e3e0;;
 }
 .error-txt{
-    margin-top: 10px;
+    margin: 10px 20px;
     padding: 10px;
     color: rgb(147 1 1);
     border-radius: 3px;
     background-color: rgb(245 176 176 / 96%);
 }
 .search-bar button img{
-    width: 30px;
+    width: 20px;
     filter: invert(1);
 }
 .weather-info .weather-icon{
@@ -103,20 +103,33 @@ input::placeholder{
 }
 
 
-@media only screen and (max-width: 860px){
-    .search-bar input{
-        height: 40px;
-        font-size: 17px;
+
+
+@media only screen and (max-width: 1415px){
+    .col{
+        flex-direction: column;
+        text-align: center;
     }
-    .search-bar button{
-        width: 40px;
-        height: 40px;
-    }
-    .search-bar button img{
-        width: 20px;
+    .col img {
+        margin-right: 0;
+        margin-bottom: 10px;
     }
 }
-@media only screen and (max-width: 650px){
+@media only screen and (max-width: 1170px){
+    .today-card{
+        margin: 45px 45px 22px 45px;
+        width: 90%;
+    }
+    .col{
+        flex-direction: row;
+    }
+    .col img{
+        margin-right: 10px;
+        margin-bottom: 0;
+    }
+}
+
+@media only screen and (max-width: 630px){
     .today-card{
         padding: 31px 25px;
         margin: 30px auto 0;
@@ -127,7 +140,6 @@ input::placeholder{
     }
     .col img{
         width: 30px;
-        margin-right: 10px;
     }
     .col .humidity, .col .wind, .col .precipitation{
         font-size: 20px;
@@ -136,25 +148,9 @@ input::placeholder{
 
 }
 @media only screen and (max-width: 560px){
-    .col{
-        flex-direction: column;
-        text-align: center;
-    }
-    .col img{
-        margin: 10px;
-    }
-    .col .humidity, .col .wind, .col .precipitation{
-        font-size: 17px;
-    }
-    .col p{
-        font-size: 15px;
-    }
-}
-@media only screen and (max-width: 460px){
     .today-card{
         width: 100%;
         background: none;
-        color: #fff;
         margin: 0;
         border-radius: 0;
         padding: 20px 0 0;
@@ -165,7 +161,6 @@ input::placeholder{
         margin-right: 11px;
         font-size: 13px;
         margin-left: 23px;
-        flex: 1;
     }
     .search-bar button{
         margin-right: 20px;
@@ -183,7 +178,6 @@ input::placeholder{
         font-size: 21px;
     }
     .weather-info{
-        height: 85vh;
         flex-direction: column;
         display: flex;
         align-items: center;
@@ -191,7 +185,6 @@ input::placeholder{
     }
     .weather-info .weather-icon {
         width: 134px;
-        margin-top: -4px;
     }
     .weather-info h1 {
         font-size: 61px;
@@ -202,7 +195,6 @@ input::placeholder{
     }
     .col{
         flex-direction: column;
-        text-align: center;
     }
     .col img{
         margin: 10px;
@@ -214,3 +206,4 @@ input::placeholder{
         font-size: 13px;
     }
 }
+

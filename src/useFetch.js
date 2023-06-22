@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from "axios";
 
-const useFetch = (url) => {
+const useFetch = (url, isForecast) => {
     const [data, setData] = useState(null);
     const [error, setError] = useState(null);
     const [isFetching, setIsfetching] = useState(false);
@@ -11,9 +11,9 @@ const useFetch = (url) => {
             setIsfetching(true);
             try {
                 const res = await axios.get(url);
-                setData({date: res.data.dt, lon: res.data.coord.lon, lat: res.data.coord.lat, main: res.data.weather[0].main, temp: res.data.main.temp, 
+                isForecast ? setData(res.data.daily) : setData({date: res.data.dt, lon: res.data.coord.lon, lat: res.data.coord.lat, main: res.data.weather[0].main, temp: res.data.main.temp, 
                     precipitation: res.data.main.feels_like, humidity: res.data.main.humidity, wind: res.data.wind.speed, city: res.data.name});
-                    setError(null);
+                setError(null);
             } catch (err) {
                 if(err.response){
                     err.response.data && setError(err.response.data.message);
@@ -24,7 +24,7 @@ const useFetch = (url) => {
             setIsfetching(false);
         }
         fetchData();
-    }, [url]);
+    }, [url, isForecast]);
 
     return ({data, error, isFetching, setError});
 }

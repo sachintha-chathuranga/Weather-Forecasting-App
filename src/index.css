@@ -20,7 +20,7 @@ body{
         height: 100%;
     }
 }
-@media only screen and (max-width: 460px){
+@media only screen and (max-width: 560px){
     body{
         background: var(--theme-color);
         background-repeat: no-repeat;
